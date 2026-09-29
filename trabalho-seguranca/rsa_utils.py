@@ -57,8 +57,8 @@ def cifrar_chave_sessao(
 
     chave_cifrada = chave_publica.encrypt(
         chave_bytes,
-        padding.OAEP(
-            mgf=padding.MGF1(
+        padding.OAEP( #padding usado junto com rsa para cifragem 
+            mgf=padding.MGF1( #gera uma mascara de bytes a apartir de um hash
                 algorithm=algoritmo_hash
             ),
             algorithm=algoritmo_hash,
