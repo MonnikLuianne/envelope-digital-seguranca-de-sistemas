@@ -35,6 +35,33 @@ def test_ida_e_volta():
             assert texto == MENSAGEM
 
 
+def test_json_segue_o_padrao_do_enunciado():
+    with tempfile.TemporaryDirectory() as pasta:
+        envelope = criar(pasta, "Hex", "SHA-512")
+
+        with open(envelope, encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+
+        assert list(dados) == ["parametros", "envelope"]
+        assert dados["parametros"] == {
+            "algoritmo_simetrico": "AES-256-CBC",
+            "padding_simetrico": "PKCS7",
+            "algoritmo_chave": "RSA-OAEP",
+            "hash_oaep": "SHA-512",
+            "algoritmo_assinatura": "RSA",
+            "hash_assinatura": "SHA-512",
+            "codificacao": "Hex",
+        }
+        assert list(dados["envelope"]) == ["iv", "chave_sessao",
+                                           "mensagem_cifrada", "assinatura"]
+
+        for campo, valor in dados["envelope"].items():
+            assert valor and valor == valor.strip(), f"campo '{campo}' inválido"
+            bytes.fromhex(valor)  # todos os campos em Hex válido
+
+        assert len(bytes.fromhex(dados["envelope"]["iv"])) == 16
+
+
 def test_assinatura_invalida_interrompe():
     with tempfile.TemporaryDirectory() as pasta:
         envelope = criar(pasta)
@@ -86,6 +113,7 @@ def test_erros_nao_derrubam_o_programa():
 
 if __name__ == "__main__":
     test_ida_e_volta()
+    test_json_segue_o_padrao_do_enunciado()
     test_assinatura_invalida_interrompe()
     test_erros_nao_derrubam_o_programa()
 
