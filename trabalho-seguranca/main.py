@@ -34,7 +34,7 @@ def criar_envelope(caminho_mensagem, pub_destinatario, priv_remetente,
         texto = arquivo.read().rstrip()
 
     if not texto:
-        raise ValueError("O arquivo da mensagem está vazio.")
+        raise ErroEnvelope("O arquivo da mensagem está vazio.")
 
     # 1. Gera a chave AES-256 e o IV.
     chave, iv = gerar_chave_iv()
