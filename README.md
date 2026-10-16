@@ -13,6 +13,12 @@ no padrão **Encrypt-then-Sign**:
 
 ---
 
+## Equipe
+
+- MONNIK LUIANNE OLIVEIRA NASCIMENTO VELOSO BARBOSA
+- FRANCISCO EDUARDO MESQUITA CRUZ
+- LUIDGE DE SOUSA CARVALHO
+
 ## Divisão da equipe
 
 | Integrante | Responsabilidade | Arquivos |
